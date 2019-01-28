@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#On attend plus de trois arguments
+if test $# -lt 3
+then
+	echo "mpirun [SERVER INFO] [PROCESS COUNT] [COMMAND] [ARGS ..]"
+	exit 1
+fi
+
+export PMI_SERVER_ADDR=$1
+export PMI_PROCESS_COUNT=$2
+export PMI_JOB_ID=`date +"%s"`
+
+echo "PMI Server : $PMI_SERVER_ADDR"
+echo "Now Launching $PMI_PROCESS_COUNT processes"
+
+# Consume the two first arguments
+shift
+shift
+
+for i in `seq 0 1 $(($PMI_PROCESS_COUNT-1))`
+do
+#Set the rank
+export PMI_RANK=$i
+#Run the command N times
+$@
+done
