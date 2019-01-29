@@ -23,5 +23,7 @@ do
 #Set the rank
 export PMI_RANK=$i
 #Run the command N times
-$@
+$@ &
 done
+
+wait

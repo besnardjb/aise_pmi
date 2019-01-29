@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -O3 -g
-TARGET=libpmi.so pmiserver test_value
+TARGET=libpmi.so pmiserver test_value test_perf
 
 all: $(TARGET)
 
@@ -12,6 +12,12 @@ pmiserver: ./server/main.c
 
 test_value: libpmi.so test/test_values.c
 	$(CC) $(CFLAGS) -Wl,-rpath,$(PWD) -L. -lpmi -o $@ -I$(PWD)/libpmi/ $^
+
+
+test_perf: libpmi.so test/test_perf.c
+	$(CC) $(CFLAGS) -Wl,-rpath,$(PWD) -L. -lpmi -o $@ -I$(PWD)/libpmi/ $^
+
+
 
 clean:
 	rm -fr $(TARGET)
