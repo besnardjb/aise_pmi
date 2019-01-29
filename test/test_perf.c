@@ -27,7 +27,7 @@ int main(int argc, char ** argv )
         int size = 1;
 	if( PMI_Get_size(&size) != PMI_SUCCESS )
 	{
-		fprintf(stderr, "Could not get PMI size\n")
+		fprintf(stderr, "Could not get PMI size\n");
 		return 1;;
 	}
 
