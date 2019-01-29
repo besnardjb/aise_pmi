@@ -10,6 +10,7 @@ int main(int argc, char ** argv )
 	if( PMI_Init() != PMI_SUCCESS )
 	{
 		fprintf(stderr, "Could not init PMI\n");
+		return 1;
 	}
 
 	int rank = 0;
@@ -17,11 +18,13 @@ int main(int argc, char ** argv )
 	if( PMI_Get_size(&size) != PMI_SUCCESS )
 	{
 		fprintf(stderr, "Could not get PMI size\n");
+		return 1;
 	}
 
 	if( PMI_Get_rank(&rank) != PMI_SUCCESS )
 	{
 		fprintf(stderr, "Could not get PMI rank\n");
+		return 1;
 	}
 
 	char key[PMI_STRING_LEN];
@@ -35,7 +38,11 @@ int main(int argc, char ** argv )
 		snprintf(key, PMI_STRING_LEN, "rank_%d_iter_%d", rank, i);
 		snprintf(val, PMI_STRING_LEN, "%d", rand());
 		printf("RANK %d SET %s = %s\n", rank, key, val);
-		PMI_KVS_Put(key, val);
+		if( PMI_KVS_Put(key, val) != PMI_SUCCESS)
+		{
+			fprintf(stderr, "Could not put key\n");
+			return 1;
+		}
 	}
 
 
@@ -53,7 +60,13 @@ int main(int argc, char ** argv )
 		snprintf(val, PMI_STRING_LEN, "%d", rand());
 		char returned_val[PMI_STRING_LEN];
 		returned_val[0]='\0';
-		PMI_KVS_Get(key, returned_val, PMI_STRING_LEN);
+		
+		if( PMI_KVS_Get(key, returned_val, PMI_STRING_LEN) != PMI_SUCCESS)
+		{
+			fprintf(stderr, "Could not get key\n");
+			return 1;
+		}
+
 		printf("RANK %d check for %d GET %s = %s expexted %s\n", rank, (rank + 1)%size, key, returned_val, val);
 		if(strcmp(val, returned_val))
 		{
