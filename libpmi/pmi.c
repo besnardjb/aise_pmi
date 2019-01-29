@@ -26,6 +26,12 @@ int PMI_Get_rank(int *rank)
 	return PMI_SUCCESS;
 }
 
+/* Donne un ID unique pour le job courant */
+int PMI_Get_job(int *jobid)
+{
+	return PMI_SUCCESS;
+}
+
 
 
 /* Effectue une barrière synchronisante entre les processus */

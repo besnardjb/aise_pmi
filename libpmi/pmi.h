@@ -16,6 +16,8 @@ int PMI_Finalize(void);
 int PMI_Get_size(int *size);
 /* Donne le rang du processus courant */
 int PMI_Get_rank(int *rank);
+/* Donne un ID unique pour le job courant */
+int PMI_Get_job(int *jobid);
 
 /* Effectue une barrière synchronisante entre les processus */
 int PMI_Barrier(void);

@@ -11,7 +11,7 @@ pmiserver: ./server/main.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 test_value: libpmi.so test/test_values.c
-	$(CC) $(CFLAGS) -Wl,-rpath=$(PWD) -L. -lpmi -o $@ -I$(PWD)/libpmi/ $^
+	$(CC) $(CFLAGS) -Wl,-rpath,$(PWD) -L. -lpmi -o $@ -I$(PWD)/libpmi/ $^
 
 clean:
 	rm -fr $(TARGET)
